@@ -1,4 +1,4 @@
-<div class="apidocDiv">
+<html><head></head><body><div class="apidocDiv">
 <style>
 /*csslint
 */
@@ -47,17 +47,10 @@
 }
 </style>
 <h1>api documentation for
-    <a
-
-        href="https://github.com/sindresorhus/gulp-markdown"
-
-    >gulp-markdown (v1.2.0)</a>
+    <a href="https://github.com/sindresorhus/gulp-markdown">gulp-markdown (v1.2.0)</a>
 </h1>
 <h4>Markdown to HTML</h4>
-<div class="apidocSectionDiv"><a
-    href="#apidoc.tableOfContents"
-    id="apidoc.tableOfContents"
-><h1>table of contents</h1></a><ol>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
 
     <li class="apidocModuleLi"><a href="#apidoc.module.gulp-markdown">module gulp-markdown</a><ol>
 
@@ -1418,18 +1411,18 @@
 		}
 
 		if (file.isStream()) {
-			cb(new gutil.PluginError(&#x27;gulp-markdown&#x27;, &#x27;Streaming not supported&#x27;));
+			cb(new gutil.PluginError('gulp-markdown', 'Streaming not supported'));
 			return;
 		}
 
 		marked(file.contents.toString(), options, function (err, data) {
 			if (err) {
-				cb(new gutil.PluginError(&#x27;gulp-markdown&#x27;, err, {fileName: file.path}));
+				cb(new gutil.PluginError('gulp-markdown', err, {fileName: file.path}));
 				return;
 			}
 
 			file.contents = new Buffer(data);
-			file.path = gutil.replaceExtension(file.path, &#x27;.html&#x27;);
+			file.path = gutil.replaceExtension(file.path, '.html');
 
 			cb(null, file);
 		});
@@ -1448,7 +1441,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function marked(src, opt, callback) {
-  if (callback || typeof opt === &#x27;function&#x27;) {
+  if (callback || typeof opt === 'function') {
     if (!callback) {
       callback = opt;
       opt = null;
@@ -1490,7 +1483,7 @@
         : callback(null, out);
     };
 
-    if (!highlight || highlight.length &#x3c; 3) {
+    if (!highlight || highlight.length &lt; 3) {
       return done();
     }
 
@@ -1498,9 +1491,9 @@
 
     if (!pending) return done();
 
-    for (; i &#x3c; tokens.length; i++) {
+    for (; i &lt; tokens.length; i++) {
       (function(token) {
-        if (token.type !== &#x27;code&#x27;) {
+        if (token.type !== 'code') {
           return --pending || done();
         }
         return highlight(token.text, token.lang, function(err, code) {
@@ -1521,11 +1514,11 @@
     if (opt) opt = merge({}, marked.defaults, opt);
     return Parser.parse(Lexer.lex(src, opt), opt);
   } catch (e) {
-    e.message += &#x27;\nPlease report this to https://github.com/chjj/marked.&#x27;;
+    e.message += '\nPlease report this to https://github.com/chjj/marked.';
     if ((opt || marked.defaults).silent) {
-      return &#x27;&#x3c;p&#x3e;An error occured:&#x3c;/p&#x3e;&#x3c;pre&#x3e;&#x27;
-        + escape(e.message + &#x27;&#x27;, true)
-        + &#x27;&#x3c;/pre&#x3e;&#x27;;
+      return '&lt;p&gt;An error occured:&lt;/p&gt;&lt;pre&gt;'
+        + escape(e.message + '', true)
+        + '&lt;/pre&gt;';
     }
     throw e;
   }
@@ -1551,7 +1544,7 @@
 
   if (!this.links) {
     throw new
-      Error(&#x27;Tokens array requires a `links` property.&#x27;);
+      Error('Tokens array requires a `links` property.');
   }
 
   if (this.options.gfm) {
@@ -1578,17 +1571,17 @@
     <ul>
     <li>description and source-code<pre class="apidocCodePre">marked.InlineLexer.prototype.mangle = function (text) {
   if (!this.options.mangle) return text;
-  var out = &#x27;&#x27;
+  var out = ''
     , l = text.length
     , i = 0
     , ch;
 
-  for (; i &#x3c; l; i++) {
+  for (; i &lt; l; i++) {
     ch = text.charCodeAt(i);
-    if (Math.random() &#x3e; 0.5) {
-      ch = &#x27;x&#x27; + ch.toString(16);
+    if (Math.random() &gt; 0.5) {
+      ch = 'x' + ch.toString(16);
     }
-    out += &#x27;&#x26;#&#x27; + ch + &#x27;;&#x27;;
+    out += '&amp;#' + ch + ';';
   }
 
   return out;
@@ -1606,7 +1599,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">marked.InlineLexer.prototype.output = function (src) {
-  var out = &#x27;&#x27;
+  var out = ''
     , link
     , text
     , href
@@ -1623,11 +1616,11 @@
     // autolink
     if (cap = this.rules.autolink.exec(src)) {
       src = src.substring(cap[0].length);
-      if (cap[2] === &#x27;@&#x27;) {
-        text = cap[1].charAt(6) === &#x27;:&#x27;
+      if (cap[2] === '@') {
+        text = cap[1].charAt(6) === ':'
           ? this.mangle(cap[1].substring(7))
           : this.mangle(cap[1]);
-        href = this.mangle(&#x27;mailto:&#x27;) + text;
+        href = this.mangle('mailto:') + text;
       } else {
         text = escape(cap[1]);
         href = text;
@@ -1637,7 +1630,7 @@
     }
 
     // url (gfm)
-    if (!this.inLink &#x26;&#x26; (cap = this.rules.url.exec(src))) {
+    if (!this.inLink &amp;&amp; (cap = this.rules.url.exec(src))) {
       src = src.substring(cap[0].length);
       text = escape(cap[1]);
       href = text;
@@ -1647,9 +1640,9 @@
 
     // tag
     if (cap = this.rules.tag.exec(src)) {
-      if (!this.inLink &#x26;&#x26; /^&#x3c;a /i.test(cap[0])) {
+      if (!this.inLink &amp;&amp; /^&lt;a /i.test(cap[0])) {
         this.inLink = true;
-      } else if (this.inLink &#x26;&#x26; /^&#x3c;\/a&#x3e;/i.test(cap[0])) {
+      } else if (this.inLink &amp;&amp; /^&lt;\/a&gt;/i.test(cap[0])) {
         this.inLink = false;
       }
       src = src.substring(cap[0].length);
@@ -1677,7 +1670,7 @@
     if ((cap = this.rules.reflink.exec(src))
         || (cap = this.rules.nolink.exec(src))) {
       src = src.substring(cap[0].length);
-      link = (cap[2] || cap[1]).replace(/\s+/g, &#x27; &#x27;);
+      link = (cap[2] || cap[1]).replace(/\s+/g, ' ');
       link = this.links[link.toLowerCase()];
       if (!link || !link.href) {
         out += cap[0].charAt(0);
@@ -1734,7 +1727,7 @@
 
     if (src) {
       throw new
-        Error(&#x27;Infinite loop on byte: &#x27; + src.charCodeAt(0));
+        Error('Infinite loop on byte: ' + src.charCodeAt(0));
     }
   }
 
@@ -1756,7 +1749,7 @@
   var href = escape(link.href)
     , title = link.title ? escape(link.title) : null;
 
-  return cap[0].charAt(0) !== &#x27;!&#x27;
+  return cap[0].charAt(0) !== '!'
     ? this.renderer.link(href, title, this.output(cap[1]))
     : this.renderer.image(href, title, escape(cap[1]));
 }</pre></li>
@@ -1776,19 +1769,19 @@
   if (!this.options.smartypants) return text;
   return text
     // em-dashes
-    .replace(/---/g, &#x27;\u2014&#x27;)
+    .replace(/---/g, '\u2014')
     // en-dashes
-    .replace(/--/g, &#x27;\u2013&#x27;)
+    .replace(/--/g, '\u2013')
     // opening singles
-    .replace(/(^|[-\u2014/(\[{&#x22;\s])&#x27;/g, &#x27;$1\u2018&#x27;)
-    // closing singles &#x26; apostrophes
-    .replace(/&#x27;/g, &#x27;\u2019&#x27;)
+    .replace(/(^|[-\u2014/(\[{"\s])'/g, '$1\u2018')
+    // closing singles &amp; apostrophes
+    .replace(/'/g, '\u2019')
     // opening doubles
-    .replace(/(^|[-\u2014/(\[{\u2018\s])&#x22;/g, &#x27;$1\u201c&#x27;)
+    .replace(/(^|[-\u2014/(\[{\u2018\s])"/g, '$1\u201c')
     // closing doubles
-    .replace(/&#x22;/g, &#x27;\u201d&#x27;)
+    .replace(/"/g, '\u201d')
     // ellipses
-    .replace(/\.{3}/g, &#x27;\u2026&#x27;);
+    .replace(/\.{3}/g, '\u2026');
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -1830,10 +1823,10 @@
     <ul>
     <li>description and source-code<pre class="apidocCodePre">marked.Lexer.prototype.lex = function (src) {
   src = src
-    .replace(/\r\n|\r/g, &#x27;\n&#x27;)
-    .replace(/\t/g, &#x27;    &#x27;)
-    .replace(/\u00a0/g, &#x27; &#x27;)
-    .replace(/\u2424/g, &#x27;\n&#x27;);
+    .replace(/\r\n|\r/g, '\n')
+    .replace(/\t/g, '    ')
+    .replace(/\u00a0/g, ' ')
+    .replace(/\u2424/g, '\n');
 
   return this.token(src, true);
 }</pre></li>
@@ -1850,7 +1843,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">marked.Lexer.prototype.token = function (src, top, bq) {
-  var src = src.replace(/^ +$/gm, &#x27;&#x27;)
+  var src = src.replace(/^ +$/gm, '')
     , next
     , loose
     , cap
@@ -1865,9 +1858,9 @@
     // newline
     if (cap = this.rules.newline.exec(src)) {
       src = src.substring(cap[0].length);
-      if (cap[0].length &#x3e; 1) {
+      if (cap[0].length &gt; 1) {
         this.tokens.push({
-          type: &#x27;space&#x27;
+          type: 'space'
         });
       }
     }
@@ -1875,11 +1868,11 @@
     // code
     if (cap = this.rules.code.exec(src)) {
       src = src.substring(cap[0].length);
-      cap = cap[0].replace(/^ {4}/gm, &#x27;&#x27;);
+      cap = cap[0].replace(/^ {4}/gm, '');
       this.tokens.push({
-        type: &#x27;code&#x27;,
+        type: 'code',
         text: !this.options.pedantic
-          ? cap.replace(/\n+$/, &#x27;&#x27;)
+          ? cap.replace(/\n+$/, '')
           : cap
       });
       continue;
@@ -1889,9 +1882,9 @@
     if (cap = this.rules.fences.exec(src)) {
       src = src.substring(cap[0].length);
       this.tokens.push({
-        type: &#x27;code&#x27;,
+        type: 'code',
         lang: cap[2],
-        text: cap[3] || &#x27;&#x27;
+        text: cap[3] || ''
       });
       continue;
     }
@@ -1900,7 +1893,7 @@
     if (cap = this.rules.heading.exec(src)) {
       src = src.substring(cap[0].length);
       this.tokens.push({
-        type: &#x27;heading&#x27;,
+        type: 'heading',
         depth: cap[1].length,
         text: cap[2]
       });
@@ -1908,29 +1901,29 @@
     }
 
     // table no leading pipe (gfm)
-    if (top &#x26;&#x26; (cap = this.rules.nptable.exec(src))) {
+    if (top &amp;&amp; (cap = this.rules.nptable.exec(src))) {
       src = src.substring(cap[0].length);
 
       item = {
-        type: &#x27;table&#x27;,
-        header: cap[1].replace(/^ *| *\| *$/g, &#x27;&#x27;).split(/ *\| */),
-        align: cap[2].replace(/^ *|\| *$/g, &#x27;&#x27;).split(/ *\| */),
-        cells: cap[3].replace(/\n$/, &#x27;&#x27;).split(&#x27;\n&#x27;)
+        type: 'table',
+        header: cap[1].replace(/^ *| *\| *$/g, '').split(/ *\| */),
+        align: cap[2].replace(/^ *|\| *$/g, '').split(/ *\| */),
+        cells: cap[3].replace(/\n$/, '').split('\n')
       };
 
-      for (i = 0; i &#x3c; item.align.length; i++) {
+      for (i = 0; i &lt; item.align.length; i++) {
         if (/^ *-+: *$/.test(item.align[i])) {
-          item.align[i] = &#x27;right&#x27;;
+          item.align[i] = 'right';
         } else if (/^ *:-+: *$/.test(item.align[i])) {
-          item.align[i] = &#x27;center&#x27;;
+          item.align[i] = 'center';
         } else if (/^ *:-+ *$/.test(item.align[i])) {
-          item.align[i] = &#x27;left&#x27;;
+          item.align[i] = 'left';
         } else {
           item.align[i] = null;
         }
       }
 
-      for (i = 0; i &#x3c; item.cells.length; i++) {
+      for (i = 0; i &lt; item.cells.length; i++) {
         item.cells[i] = item.cells[i].split(/ *\| */);
       }
 
@@ -1943,8 +1936,8 @@
     if (cap = this.rules.lheading.exec(src)) {
       src = src.substring(cap[0].length);
       this.tokens.push({
-        type: &#x27;heading&#x27;,
-        depth: cap[2] === &#x27;=&#x27; ? 1 : 2,
+        type: 'heading',
+        depth: cap[2] === '=' ? 1 : 2,
         text: cap[1]
       });
       continue;
@@ -1954,7 +1947,7 @@
     if (cap = this.rules.hr.exec(src)) {
       src = src.substring(cap[0].length);
       this.tokens.push({
-        type: &#x27;hr&#x27;
+        type: 'hr'
       });
       continue;
     }
@@ -1964,18 +1957,18 @@
       src = src.substring(cap[0].length);
 
       this.tokens.push({
-        type: &#x27;blockquote_start&#x27;
+        type: 'blockquote_start'
       });
 
-      cap = cap[0].replace(/^ *&#x3e; ?/gm, &#x27;&#x27;);
+      cap = cap[0].replace(/^ *&gt; ?/gm, '');
 
       // Pass `top` to keep the current
-      // &#x22;toplevel&#x22; state. This is exactly
+      // "toplevel" state. This is exactly
       // how markdown.pl works.
       this.token(cap, top, true);
 
       this.tokens.push({
-        type: &#x27;blockquote_end&#x27;
+        type: 'blockquote_end'
       });
 
       continue;
@@ -1987,8 +1980,8 @@
       bull = cap[2];
 
       this.tokens.push({
-        type: &#x27;list_start&#x27;,
-        ordered: bull.length &#x3e; 1
+        type: 'list_start',
+        ordered: bull.length &gt; 1
       });
 
       // Get each top-level item.
@@ -1998,28 +1991,28 @@
       l = cap.length;
       i = 0;
 
-      for (; i &#x3c; l; i++) {
+      for (; i &lt; l; i++) {
         item = cap[i];
 
-        // Remove the list item&#x27;s bullet
+        // Remove the list item's bullet
         // so it is seen as the next token.
         space = item.length;
-        item = item.replace(/^ *([*+-]|\d+\.) +/, &#x27;&#x27;);
+        item = item.replace(/^ *([*+-]|\d+\.) +/, '');
 
         // Outdent whatever the
         // list item contains. Hacky.
-        if (~item.indexOf(&#x27;\n &#x27;)) {
+        if (~item.indexOf('\n ')) {
           space -= item.length;
           item = !this.options.pedantic
-            ? item.replace(new RegExp(&#x27;^ {1,&#x27; + space + &#x27;}&#x27;, &#x27;gm&#x27;), &#x27;&#x27;)
-            : item.replace(/^ {1,4}/gm, &#x27;&#x27;);
+            ? item.replace(new RegExp('^ {1,' + space + '}', 'gm'), '')
+            : item.replace(/^ {1,4}/gm, '');
         }
 
         // Determine whether the next list item belongs here.
         // Backpedal if it does not belong in this list.
-        if (this.options.smartLists &#x26;&#x26; i !== l - 1) {
+        if (this.options.smartLists &amp;&amp; i !== l - 1) {
           b = block.bullet.exec(cap[i + 1])[0];
-          if (bull !== b &#x26;&#x26; !(bull.leng ...</pre></li>
+          if (bull !== b &amp;&amp; !(bull.leng ...</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
 
@@ -2071,7 +2064,7 @@
   this.inline = new InlineLexer(src.links, this.options, this.renderer);
   this.tokens = src.reverse();
 
-  var out = &#x27;&#x27;;
+  var out = '';
   while (this.next()) {
     out += this.tok();
   }
@@ -2093,8 +2086,8 @@
     <li>description and source-code<pre class="apidocCodePre">marked.Parser.prototype.parseText = function () {
   var body = this.token.text;
 
-  while (this.peek().type === &#x27;text&#x27;) {
-    body += &#x27;\n&#x27; + this.next().text;
+  while (this.peek().type === 'text') {
+    body += '\n' + this.next().text;
   }
 
   return this.inline.output(body);
@@ -2128,26 +2121,26 @@
     <ul>
     <li>description and source-code<pre class="apidocCodePre">marked.Parser.prototype.tok = function () {
   switch (this.token.type) {
-    case &#x27;space&#x27;: {
-      return &#x27;&#x27;;
+    case 'space': {
+      return '';
     }
-    case &#x27;hr&#x27;: {
+    case 'hr': {
       return this.renderer.hr();
     }
-    case &#x27;heading&#x27;: {
+    case 'heading': {
       return this.renderer.heading(
         this.inline.output(this.token.text),
         this.token.depth,
         this.token.text);
     }
-    case &#x27;code&#x27;: {
+    case 'code': {
       return this.renderer.code(this.token.text,
         this.token.lang,
         this.token.escaped);
     }
-    case &#x27;table&#x27;: {
-      var header = &#x27;&#x27;
-        , body = &#x27;&#x27;
+    case 'table': {
+      var header = ''
+        , body = ''
         , i
         , row
         , cell
@@ -2155,8 +2148,8 @@
         , j;
 
       // header
-      cell = &#x27;&#x27;;
-      for (i = 0; i &#x3c; this.token.header.length; i++) {
+      cell = '';
+      for (i = 0; i &lt; this.token.header.length; i++) {
         flags = { header: true, align: this.token.align[i] };
         cell += this.renderer.tablecell(
           this.inline.output(this.token.header[i]),
@@ -2165,11 +2158,11 @@
       }
       header += this.renderer.tablerow(cell);
 
-      for (i = 0; i &#x3c; this.token.cells.length; i++) {
+      for (i = 0; i &lt; this.token.cells.length; i++) {
         row = this.token.cells[i];
 
-        cell = &#x27;&#x27;;
-        for (j = 0; j &#x3c; row.length; j++) {
+        cell = '';
+        for (j = 0; j &lt; row.length; j++) {
           cell += this.renderer.tablecell(
             this.inline.output(row[j]),
             { header: false, align: this.token.align[j] }
@@ -2180,55 +2173,55 @@
       }
       return this.renderer.table(header, body);
     }
-    case &#x27;blockquote_start&#x27;: {
-      var body = &#x27;&#x27;;
+    case 'blockquote_start': {
+      var body = '';
 
-      while (this.next().type !== &#x27;blockquote_end&#x27;) {
+      while (this.next().type !== 'blockquote_end') {
         body += this.tok();
       }
 
       return this.renderer.blockquote(body);
     }
-    case &#x27;list_start&#x27;: {
-      var body = &#x27;&#x27;
+    case 'list_start': {
+      var body = ''
         , ordered = this.token.ordered;
 
-      while (this.next().type !== &#x27;list_end&#x27;) {
+      while (this.next().type !== 'list_end') {
         body += this.tok();
       }
 
       return this.renderer.list(body, ordered);
     }
-    case &#x27;list_item_start&#x27;: {
-      var body = &#x27;&#x27;;
+    case 'list_item_start': {
+      var body = '';
 
-      while (this.next().type !== &#x27;list_item_end&#x27;) {
-        body += this.token.type === &#x27;text&#x27;
+      while (this.next().type !== 'list_item_end') {
+        body += this.token.type === 'text'
           ? this.parseText()
           : this.tok();
       }
 
       return this.renderer.listitem(body);
     }
-    case &#x27;loose_item_start&#x27;: {
-      var body = &#x27;&#x27;;
+    case 'loose_item_start': {
+      var body = '';
 
-      while (this.next().type !== &#x27;list_item_end&#x27;) {
+      while (this.next().type !== 'list_item_end') {
         body += this.tok();
       }
 
       return this.renderer.listitem(body);
     }
-    case &#x27;html&#x27;: {
-      var html = !this.token.pre &#x26;&#x26; !this.options.pedantic
+    case 'html': {
+      var html = !this.token.pre &amp;&amp; !this.options.pedantic
         ? this.inline.output(this.token.text)
         : this.token.text;
       return this.renderer.html(html);
     }
-    case &#x27;paragraph&#x27;: {
+    case 'paragraph': {
       return this.renderer.paragraph(this.inline.output(this.token.text));
     }
-    case &#x27;text&#x27;: {
+    case 'text': {
       return this.renderer.paragraph(this.parseText());
     }
   }
@@ -2261,7 +2254,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">marked.Renderer.prototype.blockquote = function (quote) {
-  return &#x27;&#x3c;blockquote&#x3e;\n&#x27; + quote + &#x27;&#x3c;/blockquote&#x3e;\n&#x27;;
+  return '&lt;blockquote&gt;\n' + quote + '&lt;/blockquote&gt;\n';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -2276,7 +2269,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">marked.Renderer.prototype.br = function () {
-  return this.options.xhtml ? &#x27;&#x3c;br/&#x3e;&#x27; : &#x27;&#x3c;br&#x3e;&#x27;;
+  return this.options.xhtml ? '&lt;br/&gt;' : '&lt;br&gt;';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -2293,24 +2286,24 @@
     <li>description and source-code<pre class="apidocCodePre">marked.Renderer.prototype.code = function (code, lang, escaped) {
   if (this.options.highlight) {
     var out = this.options.highlight(code, lang);
-    if (out != null &#x26;&#x26; out !== code) {
+    if (out != null &amp;&amp; out !== code) {
       escaped = true;
       code = out;
     }
   }
 
   if (!lang) {
-    return &#x27;&#x3c;pre&#x3e;&#x3c;code&#x3e;&#x27;
+    return '&lt;pre&gt;&lt;code&gt;'
       + (escaped ? code : escape(code, true))
-      + &#x27;\n&#x3c;/code&#x3e;&#x3c;/pre&#x3e;&#x27;;
+      + '\n&lt;/code&gt;&lt;/pre&gt;';
   }
 
-  return &#x27;&#x3c;pre&#x3e;&#x3c;code class=&#x22;&#x27;
+  return '&lt;pre&gt;&lt;code class="'
     + this.options.langPrefix
     + escape(lang, true)
-    + &#x27;&#x22;&#x3e;&#x27;
+    + '"&gt;'
     + (escaped ? code : escape(code, true))
-    + &#x27;\n&#x3c;/code&#x3e;&#x3c;/pre&#x3e;\n&#x27;;
+    + '\n&lt;/code&gt;&lt;/pre&gt;\n';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -2325,7 +2318,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">marked.Renderer.prototype.codespan = function (text) {
-  return &#x27;&#x3c;code&#x3e;&#x27; + text + &#x27;&#x3c;/code&#x3e;&#x27;;
+  return '&lt;code&gt;' + text + '&lt;/code&gt;';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -2340,7 +2333,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">marked.Renderer.prototype.del = function (text) {
-  return &#x27;&#x3c;del&#x3e;&#x27; + text + &#x27;&#x3c;/del&#x3e;&#x27;;
+  return '&lt;del&gt;' + text + '&lt;/del&gt;';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -2355,7 +2348,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">marked.Renderer.prototype.em = function (text) {
-  return &#x27;&#x3c;em&#x3e;&#x27; + text + &#x27;&#x3c;/em&#x3e;&#x27;;
+  return '&lt;em&gt;' + text + '&lt;/em&gt;';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -2370,16 +2363,16 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">marked.Renderer.prototype.heading = function (text, level, raw) {
-  return &#x27;&#x3c;h&#x27;
+  return '&lt;h'
     + level
-    + &#x27; id=&#x22;&#x27;
+    + ' id="'
     + this.options.headerPrefix
-    + raw.toLowerCase().replace(/[^\w]+/g, &#x27;-&#x27;)
-    + &#x27;&#x22;&#x3e;&#x27;
+    + raw.toLowerCase().replace(/[^\w]+/g, '-')
+    + '"&gt;'
     + text
-    + &#x27;&#x3c;/h&#x27;
+    + '&lt;/h'
     + level
-    + &#x27;&#x3e;\n&#x27;;
+    + '&gt;\n';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -2394,7 +2387,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">marked.Renderer.prototype.hr = function () {
-  return this.options.xhtml ? &#x27;&#x3c;hr/&#x3e;\n&#x27; : &#x27;&#x3c;hr&#x3e;\n&#x27;;
+  return this.options.xhtml ? '&lt;hr/&gt;\n' : '&lt;hr&gt;\n';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -2424,11 +2417,11 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">marked.Renderer.prototype.image = function (href, title, text) {
-  var out = &#x27;&#x3c;img src=&#x22;&#x27; + href + &#x27;&#x22; alt=&#x22;&#x27; + text + &#x27;&#x22;&#x27;;
+  var out = '&lt;img src="' + href + '" alt="' + text + '"';
   if (title) {
-    out += &#x27; title=&#x22;&#x27; + title + &#x27;&#x22;&#x27;;
+    out += ' title="' + title + '"';
   }
-  out += this.options.xhtml ? &#x27;/&#x3e;&#x27; : &#x27;&#x3e;&#x27;;
+  out += this.options.xhtml ? '/&gt;' : '&gt;';
   return out;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -2447,20 +2440,20 @@
   if (this.options.sanitize) {
     try {
       var prot = decodeURIComponent(unescape(href))
-        .replace(/[^\w:]/g, &#x27;&#x27;)
+        .replace(/[^\w:]/g, '')
         .toLowerCase();
     } catch (e) {
-      return &#x27;&#x27;;
+      return '';
     }
-    if (prot.indexOf(&#x27;javascript:&#x27;) === 0 || prot.indexOf(&#x27;vbscript:&#x27;) === 0) {
-      return &#x27;&#x27;;
+    if (prot.indexOf('javascript:') === 0 || prot.indexOf('vbscript:') === 0) {
+      return '';
     }
   }
-  var out = &#x27;&#x3c;a href=&#x22;&#x27; + href + &#x27;&#x22;&#x27;;
+  var out = '&lt;a href="' + href + '"';
   if (title) {
-    out += &#x27; title=&#x22;&#x27; + title + &#x27;&#x22;&#x27;;
+    out += ' title="' + title + '"';
   }
-  out += &#x27;&#x3e;&#x27; + text + &#x27;&#x3c;/a&#x3e;&#x27;;
+  out += '&gt;' + text + '&lt;/a&gt;';
   return out;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -2476,8 +2469,8 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">marked.Renderer.prototype.list = function (body, ordered) {
-  var type = ordered ? &#x27;ol&#x27; : &#x27;ul&#x27;;
-  return &#x27;&#x3c;&#x27; + type + &#x27;&#x3e;\n&#x27; + body + &#x27;&#x3c;/&#x27; + type + &#x27;&#x3e;\n&#x27;;
+  var type = ordered ? 'ol' : 'ul';
+  return '&lt;' + type + '&gt;\n' + body + '&lt;/' + type + '&gt;\n';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -2492,7 +2485,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">marked.Renderer.prototype.listitem = function (text) {
-  return &#x27;&#x3c;li&#x3e;&#x27; + text + &#x27;&#x3c;/li&#x3e;\n&#x27;;
+  return '&lt;li&gt;' + text + '&lt;/li&gt;\n';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -2507,7 +2500,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">marked.Renderer.prototype.paragraph = function (text) {
-  return &#x27;&#x3c;p&#x3e;&#x27; + text + &#x27;&#x3c;/p&#x3e;\n&#x27;;
+  return '&lt;p&gt;' + text + '&lt;/p&gt;\n';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -2522,7 +2515,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">marked.Renderer.prototype.strong = function (text) {
-  return &#x27;&#x3c;strong&#x3e;&#x27; + text + &#x27;&#x3c;/strong&#x3e;&#x27;;
+  return '&lt;strong&gt;' + text + '&lt;/strong&gt;';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -2537,14 +2530,14 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">marked.Renderer.prototype.table = function (header, body) {
-  return &#x27;&#x3c;table&#x3e;\n&#x27;
-    + &#x27;&#x3c;thead&#x3e;\n&#x27;
+  return '&lt;table&gt;\n'
+    + '&lt;thead&gt;\n'
     + header
-    + &#x27;&#x3c;/thead&#x3e;\n&#x27;
-    + &#x27;&#x3c;tbody&#x3e;\n&#x27;
+    + '&lt;/thead&gt;\n'
+    + '&lt;tbody&gt;\n'
     + body
-    + &#x27;&#x3c;/tbody&#x3e;\n&#x27;
-    + &#x27;&#x3c;/table&#x3e;\n&#x27;;
+    + '&lt;/tbody&gt;\n'
+    + '&lt;/table&gt;\n';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -2559,11 +2552,11 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">marked.Renderer.prototype.tablecell = function (content, flags) {
-  var type = flags.header ? &#x27;th&#x27; : &#x27;td&#x27;;
+  var type = flags.header ? 'th' : 'td';
   var tag = flags.align
-    ? &#x27;&#x3c;&#x27; + type + &#x27; style=&#x22;text-align:&#x27; + flags.align + &#x27;&#x22;&#x3e;&#x27;
-    : &#x27;&#x3c;&#x27; + type + &#x27;&#x3e;&#x27;;
-  return tag + content + &#x27;&#x3c;/&#x27; + type + &#x27;&#x3e;\n&#x27;;
+    ? '&lt;' + type + ' style="text-align:' + flags.align + '"&gt;'
+    : '&lt;' + type + '&gt;';
+  return tag + content + '&lt;/' + type + '&gt;\n';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -2578,7 +2571,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">marked.Renderer.prototype.tablerow = function (content) {
-  return &#x27;&#x3c;tr&#x3e;\n&#x27; + content + &#x27;&#x3c;/tr&#x3e;\n&#x27;;
+  return '&lt;tr&gt;\n' + content + '&lt;/tr&gt;\n';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -2678,18 +2671,18 @@
 		}
 
 		if (file.isStream()) {
-			cb(new gutil.PluginError(&#x27;gulp-markdown&#x27;, &#x27;Streaming not supported&#x27;));
+			cb(new gutil.PluginError('gulp-markdown', 'Streaming not supported'));
 			return;
 		}
 
 		marked(file.contents.<span class="apidocCodeKeywordSpan">toString</span>(), options, function (err, data) {
 			if (err) {
-				cb(new gutil.PluginError(&#x27;gulp-markdown&#x27;, err, {fileName: file.path}));
+				cb(new gutil.PluginError('gulp-markdown', err, {fileName: file.path}));
 				return;
 			}
 
 			file.contents = new Buffer(data);
-			file.path = gutil.replaceExtension(file.path, &#x27;.html&#x27;);
+			file.path = gutil.replaceExtension(file.path, '.html');
 ...</pre></li>
     </ul>
 
@@ -2716,7 +2709,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function marked(src, opt, callback) {
-  if (callback || typeof opt === &#x27;function&#x27;) {
+  if (callback || typeof opt === 'function') {
     if (!callback) {
       callback = opt;
       opt = null;
@@ -2758,7 +2751,7 @@
         : callback(null, out);
     };
 
-    if (!highlight || highlight.length &#x3c; 3) {
+    if (!highlight || highlight.length &lt; 3) {
       return done();
     }
 
@@ -2766,9 +2759,9 @@
 
     if (!pending) return done();
 
-    for (; i &#x3c; tokens.length; i++) {
+    for (; i &lt; tokens.length; i++) {
       (function(token) {
-        if (token.type !== &#x27;code&#x27;) {
+        if (token.type !== 'code') {
           return --pending || done();
         }
         return highlight(token.text, token.lang, function(err, code) {
@@ -2789,11 +2782,11 @@
     if (opt) opt = merge({}, marked.defaults, opt);
     return Parser.parse(Lexer.lex(src, opt), opt);
   } catch (e) {
-    e.message += &#x27;\nPlease report this to https://github.com/chjj/marked.&#x27;;
+    e.message += '\nPlease report this to https://github.com/chjj/marked.';
     if ((opt || marked.defaults).silent) {
-      return &#x27;&#x3c;p&#x3e;An error occured:&#x3c;/p&#x3e;&#x3c;pre&#x3e;&#x27;
-        + escape(e.message + &#x27;&#x27;, true)
-        + &#x27;&#x3c;/pre&#x3e;&#x27;;
+      return '&lt;p&gt;An error occured:&lt;/p&gt;&lt;pre&gt;'
+        + escape(e.message + '', true)
+        + '&lt;/pre&gt;';
     }
     throw e;
   }
@@ -2819,7 +2812,7 @@
 
   if (!this.links) {
     throw new
-      Error(&#x27;Tokens array requires a `links` property.&#x27;);
+      Error('Tokens array requires a `links` property.');
   }
 
   if (this.options.gfm) {
@@ -2954,7 +2947,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function marked(src, opt, callback) {
-  if (callback || typeof opt === &#x27;function&#x27;) {
+  if (callback || typeof opt === 'function') {
     if (!callback) {
       callback = opt;
       opt = null;
@@ -2996,7 +2989,7 @@
         : callback(null, out);
     };
 
-    if (!highlight || highlight.length &#x3c; 3) {
+    if (!highlight || highlight.length &lt; 3) {
       return done();
     }
 
@@ -3004,9 +2997,9 @@
 
     if (!pending) return done();
 
-    for (; i &#x3c; tokens.length; i++) {
+    for (; i &lt; tokens.length; i++) {
       (function(token) {
-        if (token.type !== &#x27;code&#x27;) {
+        if (token.type !== 'code') {
           return --pending || done();
         }
         return highlight(token.text, token.lang, function(err, code) {
@@ -3027,11 +3020,11 @@
     if (opt) opt = merge({}, marked.defaults, opt);
     return Parser.parse(Lexer.lex(src, opt), opt);
   } catch (e) {
-    e.message += &#x27;\nPlease report this to https://github.com/chjj/marked.&#x27;;
+    e.message += '\nPlease report this to https://github.com/chjj/marked.';
     if ((opt || marked.defaults).silent) {
-      return &#x27;&#x3c;p&#x3e;An error occured:&#x3c;/p&#x3e;&#x3c;pre&#x3e;&#x27;
-        + escape(e.message + &#x27;&#x27;, true)
-        + &#x27;&#x3c;/pre&#x3e;&#x27;;
+      return '&lt;p&gt;An error occured:&lt;/p&gt;&lt;pre&gt;'
+        + escape(e.message + '', true)
+        + '&lt;/pre&gt;';
     }
     throw e;
   }
@@ -3096,7 +3089,7 @@
 
   if (!this.links) {
     throw new
-      Error(&#x27;Tokens array requires a `links` property.&#x27;);
+      Error('Tokens array requires a `links` property.');
   }
 
   if (this.options.gfm) {
@@ -3146,17 +3139,17 @@
     <ul>
     <li>description and source-code<pre class="apidocCodePre">mangle = function (text) {
   if (!this.options.mangle) return text;
-  var out = &#x27;&#x27;
+  var out = ''
     , l = text.length
     , i = 0
     , ch;
 
-  for (; i &#x3c; l; i++) {
+  for (; i &lt; l; i++) {
     ch = text.charCodeAt(i);
-    if (Math.random() &#x3e; 0.5) {
-      ch = &#x27;x&#x27; + ch.toString(16);
+    if (Math.random() &gt; 0.5) {
+      ch = 'x' + ch.toString(16);
     }
-    out += &#x27;&#x26;#&#x27; + ch + &#x27;;&#x27;;
+    out += '&amp;#' + ch + ';';
   }
 
   return out;
@@ -3174,7 +3167,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">output = function (src) {
-  var out = &#x27;&#x27;
+  var out = ''
     , link
     , text
     , href
@@ -3191,11 +3184,11 @@
     // autolink
     if (cap = this.rules.autolink.exec(src)) {
       src = src.substring(cap[0].length);
-      if (cap[2] === &#x27;@&#x27;) {
-        text = cap[1].charAt(6) === &#x27;:&#x27;
+      if (cap[2] === '@') {
+        text = cap[1].charAt(6) === ':'
           ? this.mangle(cap[1].substring(7))
           : this.mangle(cap[1]);
-        href = this.mangle(&#x27;mailto:&#x27;) + text;
+        href = this.mangle('mailto:') + text;
       } else {
         text = escape(cap[1]);
         href = text;
@@ -3205,7 +3198,7 @@
     }
 
     // url (gfm)
-    if (!this.inLink &#x26;&#x26; (cap = this.rules.url.exec(src))) {
+    if (!this.inLink &amp;&amp; (cap = this.rules.url.exec(src))) {
       src = src.substring(cap[0].length);
       text = escape(cap[1]);
       href = text;
@@ -3215,9 +3208,9 @@
 
     // tag
     if (cap = this.rules.tag.exec(src)) {
-      if (!this.inLink &#x26;&#x26; /^&#x3c;a /i.test(cap[0])) {
+      if (!this.inLink &amp;&amp; /^&lt;a /i.test(cap[0])) {
         this.inLink = true;
-      } else if (this.inLink &#x26;&#x26; /^&#x3c;\/a&#x3e;/i.test(cap[0])) {
+      } else if (this.inLink &amp;&amp; /^&lt;\/a&gt;/i.test(cap[0])) {
         this.inLink = false;
       }
       src = src.substring(cap[0].length);
@@ -3245,7 +3238,7 @@
     if ((cap = this.rules.reflink.exec(src))
         || (cap = this.rules.nolink.exec(src))) {
       src = src.substring(cap[0].length);
-      link = (cap[2] || cap[1]).replace(/\s+/g, &#x27; &#x27;);
+      link = (cap[2] || cap[1]).replace(/\s+/g, ' ');
       link = this.links[link.toLowerCase()];
       if (!link || !link.href) {
         out += cap[0].charAt(0);
@@ -3302,7 +3295,7 @@
 
     if (src) {
       throw new
-        Error(&#x27;Infinite loop on byte: &#x27; + src.charCodeAt(0));
+        Error('Infinite loop on byte: ' + src.charCodeAt(0));
     }
   }
 
@@ -3324,7 +3317,7 @@
   var href = escape(link.href)
     , title = link.title ? escape(link.title) : null;
 
-  return cap[0].charAt(0) !== &#x27;!&#x27;
+  return cap[0].charAt(0) !== '!'
     ? this.renderer.link(href, title, this.output(cap[1]))
     : this.renderer.image(href, title, escape(cap[1]));
 }</pre></li>
@@ -3344,19 +3337,19 @@
   if (!this.options.smartypants) return text;
   return text
     // em-dashes
-    .replace(/---/g, &#x27;\u2014&#x27;)
+    .replace(/---/g, '\u2014')
     // en-dashes
-    .replace(/--/g, &#x27;\u2013&#x27;)
+    .replace(/--/g, '\u2013')
     // opening singles
-    .replace(/(^|[-\u2014/(\[{&#x22;\s])&#x27;/g, &#x27;$1\u2018&#x27;)
-    // closing singles &#x26; apostrophes
-    .replace(/&#x27;/g, &#x27;\u2019&#x27;)
+    .replace(/(^|[-\u2014/(\[{"\s])'/g, '$1\u2018')
+    // closing singles &amp; apostrophes
+    .replace(/'/g, '\u2019')
     // opening doubles
-    .replace(/(^|[-\u2014/(\[{\u2018\s])&#x22;/g, &#x27;$1\u201c&#x27;)
+    .replace(/(^|[-\u2014/(\[{\u2018\s])"/g, '$1\u201c')
     // closing doubles
-    .replace(/&#x22;/g, &#x27;\u201d&#x27;)
+    .replace(/"/g, '\u201d')
     // ellipses
-    .replace(/\.{3}/g, &#x27;\u2026&#x27;);
+    .replace(/\.{3}/g, '\u2026');
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -3377,17 +3370,17 @@
     <ul>
     <li>description and source-code<pre class="apidocCodePre">mangle = function (text) {
   if (!this.options.mangle) return text;
-  var out = &#x27;&#x27;
+  var out = ''
     , l = text.length
     , i = 0
     , ch;
 
-  for (; i &#x3c; l; i++) {
+  for (; i &lt; l; i++) {
     ch = text.charCodeAt(i);
-    if (Math.random() &#x3e; 0.5) {
-      ch = &#x27;x&#x27; + ch.toString(16);
+    if (Math.random() &gt; 0.5) {
+      ch = 'x' + ch.toString(16);
     }
-    out += &#x27;&#x26;#&#x27; + ch + &#x27;;&#x27;;
+    out += '&amp;#' + ch + ';';
   }
 
   return out;
@@ -3410,7 +3403,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">output = function (src) {
-  var out = &#x27;&#x27;
+  var out = ''
     , link
     , text
     , href
@@ -3427,11 +3420,11 @@
     // autolink
     if (cap = this.rules.autolink.exec(src)) {
       src = src.substring(cap[0].length);
-      if (cap[2] === &#x27;@&#x27;) {
-        text = cap[1].charAt(6) === &#x27;:&#x27;
+      if (cap[2] === '@') {
+        text = cap[1].charAt(6) === ':'
           ? this.mangle(cap[1].substring(7))
           : this.mangle(cap[1]);
-        href = this.mangle(&#x27;mailto:&#x27;) + text;
+        href = this.mangle('mailto:') + text;
       } else {
         text = escape(cap[1]);
         href = text;
@@ -3441,7 +3434,7 @@
     }
 
     // url (gfm)
-    if (!this.inLink &#x26;&#x26; (cap = this.rules.url.exec(src))) {
+    if (!this.inLink &amp;&amp; (cap = this.rules.url.exec(src))) {
       src = src.substring(cap[0].length);
       text = escape(cap[1]);
       href = text;
@@ -3451,9 +3444,9 @@
 
     // tag
     if (cap = this.rules.tag.exec(src)) {
-      if (!this.inLink &#x26;&#x26; /^&#x3c;a /i.test(cap[0])) {
+      if (!this.inLink &amp;&amp; /^&lt;a /i.test(cap[0])) {
         this.inLink = true;
-      } else if (this.inLink &#x26;&#x26; /^&#x3c;\/a&#x3e;/i.test(cap[0])) {
+      } else if (this.inLink &amp;&amp; /^&lt;\/a&gt;/i.test(cap[0])) {
         this.inLink = false;
       }
       src = src.substring(cap[0].length);
@@ -3481,7 +3474,7 @@
     if ((cap = this.rules.reflink.exec(src))
         || (cap = this.rules.nolink.exec(src))) {
       src = src.substring(cap[0].length);
-      link = (cap[2] || cap[1]).replace(/\s+/g, &#x27; &#x27;);
+      link = (cap[2] || cap[1]).replace(/\s+/g, ' ');
       link = this.links[link.toLowerCase()];
       if (!link || !link.href) {
         out += cap[0].charAt(0);
@@ -3538,7 +3531,7 @@
 
     if (src) {
       throw new
-        Error(&#x27;Infinite loop on byte: &#x27; + src.charCodeAt(0));
+        Error('Infinite loop on byte: ' + src.charCodeAt(0));
     }
   }
 
@@ -3565,7 +3558,7 @@
   var href = escape(link.href)
     , title = link.title ? escape(link.title) : null;
 
-  return cap[0].charAt(0) !== &#x27;!&#x27;
+  return cap[0].charAt(0) !== '!'
     ? this.renderer.link(href, title, this.output(cap[1]))
     : this.renderer.image(href, title, escape(cap[1]));
 }</pre></li>
@@ -3590,19 +3583,19 @@
   if (!this.options.smartypants) return text;
   return text
     // em-dashes
-    .replace(/---/g, &#x27;\u2014&#x27;)
+    .replace(/---/g, '\u2014')
     // en-dashes
-    .replace(/--/g, &#x27;\u2013&#x27;)
+    .replace(/--/g, '\u2013')
     // opening singles
-    .replace(/(^|[-\u2014/(\[{&#x22;\s])&#x27;/g, &#x27;$1\u2018&#x27;)
-    // closing singles &#x26; apostrophes
-    .replace(/&#x27;/g, &#x27;\u2019&#x27;)
+    .replace(/(^|[-\u2014/(\[{"\s])'/g, '$1\u2018')
+    // closing singles &amp; apostrophes
+    .replace(/'/g, '\u2019')
     // opening doubles
-    .replace(/(^|[-\u2014/(\[{\u2018\s])&#x22;/g, &#x27;$1\u201c&#x27;)
+    .replace(/(^|[-\u2014/(\[{\u2018\s])"/g, '$1\u201c')
     // closing doubles
-    .replace(/&#x22;/g, &#x27;\u201d&#x27;)
+    .replace(/"/g, '\u201d')
     // ellipses
-    .replace(/\.{3}/g, &#x27;\u2026&#x27;);
+    .replace(/\.{3}/g, '\u2026');
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -3672,10 +3665,10 @@
     <ul>
     <li>description and source-code<pre class="apidocCodePre">lex = function (src) {
   src = src
-    .replace(/\r\n|\r/g, &#x27;\n&#x27;)
-    .replace(/\t/g, &#x27;    &#x27;)
-    .replace(/\u00a0/g, &#x27; &#x27;)
-    .replace(/\u2424/g, &#x27;\n&#x27;);
+    .replace(/\r\n|\r/g, '\n')
+    .replace(/\t/g, '    ')
+    .replace(/\u00a0/g, ' ')
+    .replace(/\u2424/g, '\n');
 
   return this.token(src, true);
 }</pre></li>
@@ -3692,7 +3685,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">token = function (src, top, bq) {
-  var src = src.replace(/^ +$/gm, &#x27;&#x27;)
+  var src = src.replace(/^ +$/gm, '')
     , next
     , loose
     , cap
@@ -3707,9 +3700,9 @@
     // newline
     if (cap = this.rules.newline.exec(src)) {
       src = src.substring(cap[0].length);
-      if (cap[0].length &#x3e; 1) {
+      if (cap[0].length &gt; 1) {
         this.tokens.push({
-          type: &#x27;space&#x27;
+          type: 'space'
         });
       }
     }
@@ -3717,11 +3710,11 @@
     // code
     if (cap = this.rules.code.exec(src)) {
       src = src.substring(cap[0].length);
-      cap = cap[0].replace(/^ {4}/gm, &#x27;&#x27;);
+      cap = cap[0].replace(/^ {4}/gm, '');
       this.tokens.push({
-        type: &#x27;code&#x27;,
+        type: 'code',
         text: !this.options.pedantic
-          ? cap.replace(/\n+$/, &#x27;&#x27;)
+          ? cap.replace(/\n+$/, '')
           : cap
       });
       continue;
@@ -3731,9 +3724,9 @@
     if (cap = this.rules.fences.exec(src)) {
       src = src.substring(cap[0].length);
       this.tokens.push({
-        type: &#x27;code&#x27;,
+        type: 'code',
         lang: cap[2],
-        text: cap[3] || &#x27;&#x27;
+        text: cap[3] || ''
       });
       continue;
     }
@@ -3742,7 +3735,7 @@
     if (cap = this.rules.heading.exec(src)) {
       src = src.substring(cap[0].length);
       this.tokens.push({
-        type: &#x27;heading&#x27;,
+        type: 'heading',
         depth: cap[1].length,
         text: cap[2]
       });
@@ -3750,29 +3743,29 @@
     }
 
     // table no leading pipe (gfm)
-    if (top &#x26;&#x26; (cap = this.rules.nptable.exec(src))) {
+    if (top &amp;&amp; (cap = this.rules.nptable.exec(src))) {
       src = src.substring(cap[0].length);
 
       item = {
-        type: &#x27;table&#x27;,
-        header: cap[1].replace(/^ *| *\| *$/g, &#x27;&#x27;).split(/ *\| */),
-        align: cap[2].replace(/^ *|\| *$/g, &#x27;&#x27;).split(/ *\| */),
-        cells: cap[3].replace(/\n$/, &#x27;&#x27;).split(&#x27;\n&#x27;)
+        type: 'table',
+        header: cap[1].replace(/^ *| *\| *$/g, '').split(/ *\| */),
+        align: cap[2].replace(/^ *|\| *$/g, '').split(/ *\| */),
+        cells: cap[3].replace(/\n$/, '').split('\n')
       };
 
-      for (i = 0; i &#x3c; item.align.length; i++) {
+      for (i = 0; i &lt; item.align.length; i++) {
         if (/^ *-+: *$/.test(item.align[i])) {
-          item.align[i] = &#x27;right&#x27;;
+          item.align[i] = 'right';
         } else if (/^ *:-+: *$/.test(item.align[i])) {
-          item.align[i] = &#x27;center&#x27;;
+          item.align[i] = 'center';
         } else if (/^ *:-+ *$/.test(item.align[i])) {
-          item.align[i] = &#x27;left&#x27;;
+          item.align[i] = 'left';
         } else {
           item.align[i] = null;
         }
       }
 
-      for (i = 0; i &#x3c; item.cells.length; i++) {
+      for (i = 0; i &lt; item.cells.length; i++) {
         item.cells[i] = item.cells[i].split(/ *\| */);
       }
 
@@ -3785,8 +3778,8 @@
     if (cap = this.rules.lheading.exec(src)) {
       src = src.substring(cap[0].length);
       this.tokens.push({
-        type: &#x27;heading&#x27;,
-        depth: cap[2] === &#x27;=&#x27; ? 1 : 2,
+        type: 'heading',
+        depth: cap[2] === '=' ? 1 : 2,
         text: cap[1]
       });
       continue;
@@ -3796,7 +3789,7 @@
     if (cap = this.rules.hr.exec(src)) {
       src = src.substring(cap[0].length);
       this.tokens.push({
-        type: &#x27;hr&#x27;
+        type: 'hr'
       });
       continue;
     }
@@ -3806,18 +3799,18 @@
       src = src.substring(cap[0].length);
 
       this.tokens.push({
-        type: &#x27;blockquote_start&#x27;
+        type: 'blockquote_start'
       });
 
-      cap = cap[0].replace(/^ *&#x3e; ?/gm, &#x27;&#x27;);
+      cap = cap[0].replace(/^ *&gt; ?/gm, '');
 
       // Pass `top` to keep the current
-      // &#x22;toplevel&#x22; state. This is exactly
+      // "toplevel" state. This is exactly
       // how markdown.pl works.
       this.token(cap, top, true);
 
       this.tokens.push({
-        type: &#x27;blockquote_end&#x27;
+        type: 'blockquote_end'
       });
 
       continue;
@@ -3829,8 +3822,8 @@
       bull = cap[2];
 
       this.tokens.push({
-        type: &#x27;list_start&#x27;,
-        ordered: bull.length &#x3e; 1
+        type: 'list_start',
+        ordered: bull.length &gt; 1
       });
 
       // Get each top-level item.
@@ -3840,28 +3833,28 @@
       l = cap.length;
       i = 0;
 
-      for (; i &#x3c; l; i++) {
+      for (; i &lt; l; i++) {
         item = cap[i];
 
-        // Remove the list item&#x27;s bullet
+        // Remove the list item's bullet
         // so it is seen as the next token.
         space = item.length;
-        item = item.replace(/^ *([*+-]|\d+\.) +/, &#x27;&#x27;);
+        item = item.replace(/^ *([*+-]|\d+\.) +/, '');
 
         // Outdent whatever the
         // list item contains. Hacky.
-        if (~item.indexOf(&#x27;\n &#x27;)) {
+        if (~item.indexOf('\n ')) {
           space -= item.length;
           item = !this.options.pedantic
-            ? item.replace(new RegExp(&#x27;^ {1,&#x27; + space + &#x27;}&#x27;, &#x27;gm&#x27;), &#x27;&#x27;)
-            : item.replace(/^ {1,4}/gm, &#x27;&#x27;);
+            ? item.replace(new RegExp('^ {1,' + space + '}', 'gm'), '')
+            : item.replace(/^ {1,4}/gm, '');
         }
 
         // Determine whether the next list item belongs here.
         // Backpedal if it does not belong in this list.
-        if (this.options.smartLists &#x26;&#x26; i !== l - 1) {
+        if (this.options.smartLists &amp;&amp; i !== l - 1) {
           b = block.bullet.exec(cap[i + 1])[0];
-          if (bull !== b &#x26;&#x26; !(bull.leng ...</pre></li>
+          if (bull !== b &amp;&amp; !(bull.leng ...</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
 
@@ -3881,10 +3874,10 @@
     <ul>
     <li>description and source-code<pre class="apidocCodePre">lex = function (src) {
   src = src
-    .replace(/\r\n|\r/g, &#x27;\n&#x27;)
-    .replace(/\t/g, &#x27;    &#x27;)
-    .replace(/\u00a0/g, &#x27; &#x27;)
-    .replace(/\u2424/g, &#x27;\n&#x27;);
+    .replace(/\r\n|\r/g, '\n')
+    .replace(/\t/g, '    ')
+    .replace(/\u00a0/g, ' ')
+    .replace(/\u2424/g, '\n');
 
   return this.token(src, true);
 }</pre></li>
@@ -3906,7 +3899,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">token = function (src, top, bq) {
-  var src = src.replace(/^ +$/gm, &#x27;&#x27;)
+  var src = src.replace(/^ +$/gm, '')
     , next
     , loose
     , cap
@@ -3921,9 +3914,9 @@
     // newline
     if (cap = this.rules.newline.exec(src)) {
       src = src.substring(cap[0].length);
-      if (cap[0].length &#x3e; 1) {
+      if (cap[0].length &gt; 1) {
         this.tokens.push({
-          type: &#x27;space&#x27;
+          type: 'space'
         });
       }
     }
@@ -3931,11 +3924,11 @@
     // code
     if (cap = this.rules.code.exec(src)) {
       src = src.substring(cap[0].length);
-      cap = cap[0].replace(/^ {4}/gm, &#x27;&#x27;);
+      cap = cap[0].replace(/^ {4}/gm, '');
       this.tokens.push({
-        type: &#x27;code&#x27;,
+        type: 'code',
         text: !this.options.pedantic
-          ? cap.replace(/\n+$/, &#x27;&#x27;)
+          ? cap.replace(/\n+$/, '')
           : cap
       });
       continue;
@@ -3945,9 +3938,9 @@
     if (cap = this.rules.fences.exec(src)) {
       src = src.substring(cap[0].length);
       this.tokens.push({
-        type: &#x27;code&#x27;,
+        type: 'code',
         lang: cap[2],
-        text: cap[3] || &#x27;&#x27;
+        text: cap[3] || ''
       });
       continue;
     }
@@ -3956,7 +3949,7 @@
     if (cap = this.rules.heading.exec(src)) {
       src = src.substring(cap[0].length);
       this.tokens.push({
-        type: &#x27;heading&#x27;,
+        type: 'heading',
         depth: cap[1].length,
         text: cap[2]
       });
@@ -3964,29 +3957,29 @@
     }
 
     // table no leading pipe (gfm)
-    if (top &#x26;&#x26; (cap = this.rules.nptable.exec(src))) {
+    if (top &amp;&amp; (cap = this.rules.nptable.exec(src))) {
       src = src.substring(cap[0].length);
 
       item = {
-        type: &#x27;table&#x27;,
-        header: cap[1].replace(/^ *| *\| *$/g, &#x27;&#x27;).split(/ *\| */),
-        align: cap[2].replace(/^ *|\| *$/g, &#x27;&#x27;).split(/ *\| */),
-        cells: cap[3].replace(/\n$/, &#x27;&#x27;).split(&#x27;\n&#x27;)
+        type: 'table',
+        header: cap[1].replace(/^ *| *\| *$/g, '').split(/ *\| */),
+        align: cap[2].replace(/^ *|\| *$/g, '').split(/ *\| */),
+        cells: cap[3].replace(/\n$/, '').split('\n')
       };
 
-      for (i = 0; i &#x3c; item.align.length; i++) {
+      for (i = 0; i &lt; item.align.length; i++) {
         if (/^ *-+: *$/.test(item.align[i])) {
-          item.align[i] = &#x27;right&#x27;;
+          item.align[i] = 'right';
         } else if (/^ *:-+: *$/.test(item.align[i])) {
-          item.align[i] = &#x27;center&#x27;;
+          item.align[i] = 'center';
         } else if (/^ *:-+ *$/.test(item.align[i])) {
-          item.align[i] = &#x27;left&#x27;;
+          item.align[i] = 'left';
         } else {
           item.align[i] = null;
         }
       }
 
-      for (i = 0; i &#x3c; item.cells.length; i++) {
+      for (i = 0; i &lt; item.cells.length; i++) {
         item.cells[i] = item.cells[i].split(/ *\| */);
       }
 
@@ -3999,8 +3992,8 @@
     if (cap = this.rules.lheading.exec(src)) {
       src = src.substring(cap[0].length);
       this.tokens.push({
-        type: &#x27;heading&#x27;,
-        depth: cap[2] === &#x27;=&#x27; ? 1 : 2,
+        type: 'heading',
+        depth: cap[2] === '=' ? 1 : 2,
         text: cap[1]
       });
       continue;
@@ -4010,7 +4003,7 @@
     if (cap = this.rules.hr.exec(src)) {
       src = src.substring(cap[0].length);
       this.tokens.push({
-        type: &#x27;hr&#x27;
+        type: 'hr'
       });
       continue;
     }
@@ -4020,18 +4013,18 @@
       src = src.substring(cap[0].length);
 
       this.tokens.push({
-        type: &#x27;blockquote_start&#x27;
+        type: 'blockquote_start'
       });
 
-      cap = cap[0].replace(/^ *&#x3e; ?/gm, &#x27;&#x27;);
+      cap = cap[0].replace(/^ *&gt; ?/gm, '');
 
       // Pass `top` to keep the current
-      // &#x22;toplevel&#x22; state. This is exactly
+      // "toplevel" state. This is exactly
       // how markdown.pl works.
       this.token(cap, top, true);
 
       this.tokens.push({
-        type: &#x27;blockquote_end&#x27;
+        type: 'blockquote_end'
       });
 
       continue;
@@ -4043,8 +4036,8 @@
       bull = cap[2];
 
       this.tokens.push({
-        type: &#x27;list_start&#x27;,
-        ordered: bull.length &#x3e; 1
+        type: 'list_start',
+        ordered: bull.length &gt; 1
       });
 
       // Get each top-level item.
@@ -4054,28 +4047,28 @@
       l = cap.length;
       i = 0;
 
-      for (; i &#x3c; l; i++) {
+      for (; i &lt; l; i++) {
         item = cap[i];
 
-        // Remove the list item&#x27;s bullet
+        // Remove the list item's bullet
         // so it is seen as the next token.
         space = item.length;
-        item = item.replace(/^ *([*+-]|\d+\.) +/, &#x27;&#x27;);
+        item = item.replace(/^ *([*+-]|\d+\.) +/, '');
 
         // Outdent whatever the
         // list item contains. Hacky.
-        if (~item.indexOf(&#x27;\n &#x27;)) {
+        if (~item.indexOf('\n ')) {
           space -= item.length;
           item = !this.options.pedantic
-            ? item.replace(new RegExp(&#x27;^ {1,&#x27; + space + &#x27;}&#x27;, &#x27;gm&#x27;), &#x27;&#x27;)
-            : item.replace(/^ {1,4}/gm, &#x27;&#x27;);
+            ? item.replace(new RegExp('^ {1,' + space + '}', 'gm'), '')
+            : item.replace(/^ {1,4}/gm, '');
         }
 
         // Determine whether the next list item belongs here.
         // Backpedal if it does not belong in this list.
-        if (this.options.smartLists &#x26;&#x26; i !== l - 1) {
+        if (this.options.smartLists &amp;&amp; i !== l - 1) {
           b = block.bullet.exec(cap[i + 1])[0];
-          if (bull !== b &#x26;&#x26; !(bull.leng ...</pre></li>
+          if (bull !== b &amp;&amp; !(bull.leng ...</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
 
@@ -4153,7 +4146,7 @@
   this.inline = new InlineLexer(src.links, this.options, this.renderer);
   this.tokens = src.reverse();
 
-  var out = &#x27;&#x27;;
+  var out = '';
   while (this.next()) {
     out += this.tok();
   }
@@ -4175,8 +4168,8 @@
     <li>description and source-code<pre class="apidocCodePre">parseText = function () {
   var body = this.token.text;
 
-  while (this.peek().type === &#x27;text&#x27;) {
-    body += &#x27;\n&#x27; + this.next().text;
+  while (this.peek().type === 'text') {
+    body += '\n' + this.next().text;
   }
 
   return this.inline.output(body);
@@ -4210,26 +4203,26 @@
     <ul>
     <li>description and source-code<pre class="apidocCodePre">tok = function () {
   switch (this.token.type) {
-    case &#x27;space&#x27;: {
-      return &#x27;&#x27;;
+    case 'space': {
+      return '';
     }
-    case &#x27;hr&#x27;: {
+    case 'hr': {
       return this.renderer.hr();
     }
-    case &#x27;heading&#x27;: {
+    case 'heading': {
       return this.renderer.heading(
         this.inline.output(this.token.text),
         this.token.depth,
         this.token.text);
     }
-    case &#x27;code&#x27;: {
+    case 'code': {
       return this.renderer.code(this.token.text,
         this.token.lang,
         this.token.escaped);
     }
-    case &#x27;table&#x27;: {
-      var header = &#x27;&#x27;
-        , body = &#x27;&#x27;
+    case 'table': {
+      var header = ''
+        , body = ''
         , i
         , row
         , cell
@@ -4237,8 +4230,8 @@
         , j;
 
       // header
-      cell = &#x27;&#x27;;
-      for (i = 0; i &#x3c; this.token.header.length; i++) {
+      cell = '';
+      for (i = 0; i &lt; this.token.header.length; i++) {
         flags = { header: true, align: this.token.align[i] };
         cell += this.renderer.tablecell(
           this.inline.output(this.token.header[i]),
@@ -4247,11 +4240,11 @@
       }
       header += this.renderer.tablerow(cell);
 
-      for (i = 0; i &#x3c; this.token.cells.length; i++) {
+      for (i = 0; i &lt; this.token.cells.length; i++) {
         row = this.token.cells[i];
 
-        cell = &#x27;&#x27;;
-        for (j = 0; j &#x3c; row.length; j++) {
+        cell = '';
+        for (j = 0; j &lt; row.length; j++) {
           cell += this.renderer.tablecell(
             this.inline.output(row[j]),
             { header: false, align: this.token.align[j] }
@@ -4262,55 +4255,55 @@
       }
       return this.renderer.table(header, body);
     }
-    case &#x27;blockquote_start&#x27;: {
-      var body = &#x27;&#x27;;
+    case 'blockquote_start': {
+      var body = '';
 
-      while (this.next().type !== &#x27;blockquote_end&#x27;) {
+      while (this.next().type !== 'blockquote_end') {
         body += this.tok();
       }
 
       return this.renderer.blockquote(body);
     }
-    case &#x27;list_start&#x27;: {
-      var body = &#x27;&#x27;
+    case 'list_start': {
+      var body = ''
         , ordered = this.token.ordered;
 
-      while (this.next().type !== &#x27;list_end&#x27;) {
+      while (this.next().type !== 'list_end') {
         body += this.tok();
       }
 
       return this.renderer.list(body, ordered);
     }
-    case &#x27;list_item_start&#x27;: {
-      var body = &#x27;&#x27;;
+    case 'list_item_start': {
+      var body = '';
 
-      while (this.next().type !== &#x27;list_item_end&#x27;) {
-        body += this.token.type === &#x27;text&#x27;
+      while (this.next().type !== 'list_item_end') {
+        body += this.token.type === 'text'
           ? this.parseText()
           : this.tok();
       }
 
       return this.renderer.listitem(body);
     }
-    case &#x27;loose_item_start&#x27;: {
-      var body = &#x27;&#x27;;
+    case 'loose_item_start': {
+      var body = '';
 
-      while (this.next().type !== &#x27;list_item_end&#x27;) {
+      while (this.next().type !== 'list_item_end') {
         body += this.tok();
       }
 
       return this.renderer.listitem(body);
     }
-    case &#x27;html&#x27;: {
-      var html = !this.token.pre &#x26;&#x26; !this.options.pedantic
+    case 'html': {
+      var html = !this.token.pre &amp;&amp; !this.options.pedantic
         ? this.inline.output(this.token.text)
         : this.token.text;
       return this.renderer.html(html);
     }
-    case &#x27;paragraph&#x27;: {
+    case 'paragraph': {
       return this.renderer.paragraph(this.inline.output(this.token.text));
     }
-    case &#x27;text&#x27;: {
+    case 'text': {
       return this.renderer.paragraph(this.parseText());
     }
   }
@@ -4356,7 +4349,7 @@
   this.inline = new InlineLexer(src.links, this.options, this.renderer);
   this.tokens = src.reverse();
 
-  var out = &#x27;&#x27;;
+  var out = '';
   while (this.next()) {
     out += this.tok();
   }
@@ -4383,8 +4376,8 @@
     <li>description and source-code<pre class="apidocCodePre">parseText = function () {
   var body = this.token.text;
 
-  while (this.peek().type === &#x27;text&#x27;) {
-    body += &#x27;\n&#x27; + this.next().text;
+  while (this.peek().type === 'text') {
+    body += '\n' + this.next().text;
   }
 
   return this.inline.output(body);
@@ -4428,26 +4421,26 @@
     <ul>
     <li>description and source-code<pre class="apidocCodePre">tok = function () {
   switch (this.token.type) {
-    case &#x27;space&#x27;: {
-      return &#x27;&#x27;;
+    case 'space': {
+      return '';
     }
-    case &#x27;hr&#x27;: {
+    case 'hr': {
       return this.renderer.hr();
     }
-    case &#x27;heading&#x27;: {
+    case 'heading': {
       return this.renderer.heading(
         this.inline.output(this.token.text),
         this.token.depth,
         this.token.text);
     }
-    case &#x27;code&#x27;: {
+    case 'code': {
       return this.renderer.code(this.token.text,
         this.token.lang,
         this.token.escaped);
     }
-    case &#x27;table&#x27;: {
-      var header = &#x27;&#x27;
-        , body = &#x27;&#x27;
+    case 'table': {
+      var header = ''
+        , body = ''
         , i
         , row
         , cell
@@ -4455,8 +4448,8 @@
         , j;
 
       // header
-      cell = &#x27;&#x27;;
-      for (i = 0; i &#x3c; this.token.header.length; i++) {
+      cell = '';
+      for (i = 0; i &lt; this.token.header.length; i++) {
         flags = { header: true, align: this.token.align[i] };
         cell += this.renderer.tablecell(
           this.inline.output(this.token.header[i]),
@@ -4465,11 +4458,11 @@
       }
       header += this.renderer.tablerow(cell);
 
-      for (i = 0; i &#x3c; this.token.cells.length; i++) {
+      for (i = 0; i &lt; this.token.cells.length; i++) {
         row = this.token.cells[i];
 
-        cell = &#x27;&#x27;;
-        for (j = 0; j &#x3c; row.length; j++) {
+        cell = '';
+        for (j = 0; j &lt; row.length; j++) {
           cell += this.renderer.tablecell(
             this.inline.output(row[j]),
             { header: false, align: this.token.align[j] }
@@ -4480,55 +4473,55 @@
       }
       return this.renderer.table(header, body);
     }
-    case &#x27;blockquote_start&#x27;: {
-      var body = &#x27;&#x27;;
+    case 'blockquote_start': {
+      var body = '';
 
-      while (this.next().type !== &#x27;blockquote_end&#x27;) {
+      while (this.next().type !== 'blockquote_end') {
         body += this.tok();
       }
 
       return this.renderer.blockquote(body);
     }
-    case &#x27;list_start&#x27;: {
-      var body = &#x27;&#x27;
+    case 'list_start': {
+      var body = ''
         , ordered = this.token.ordered;
 
-      while (this.next().type !== &#x27;list_end&#x27;) {
+      while (this.next().type !== 'list_end') {
         body += this.tok();
       }
 
       return this.renderer.list(body, ordered);
     }
-    case &#x27;list_item_start&#x27;: {
-      var body = &#x27;&#x27;;
+    case 'list_item_start': {
+      var body = '';
 
-      while (this.next().type !== &#x27;list_item_end&#x27;) {
-        body += this.token.type === &#x27;text&#x27;
+      while (this.next().type !== 'list_item_end') {
+        body += this.token.type === 'text'
           ? this.parseText()
           : this.tok();
       }
 
       return this.renderer.listitem(body);
     }
-    case &#x27;loose_item_start&#x27;: {
-      var body = &#x27;&#x27;;
+    case 'loose_item_start': {
+      var body = '';
 
-      while (this.next().type !== &#x27;list_item_end&#x27;) {
+      while (this.next().type !== 'list_item_end') {
         body += this.tok();
       }
 
       return this.renderer.listitem(body);
     }
-    case &#x27;html&#x27;: {
-      var html = !this.token.pre &#x26;&#x26; !this.options.pedantic
+    case 'html': {
+      var html = !this.token.pre &amp;&amp; !this.options.pedantic
         ? this.inline.output(this.token.text)
         : this.token.text;
       return this.renderer.html(html);
     }
-    case &#x27;paragraph&#x27;: {
+    case 'paragraph': {
       return this.renderer.paragraph(this.inline.output(this.token.text));
     }
-    case &#x27;text&#x27;: {
+    case 'text': {
       return this.renderer.paragraph(this.parseText());
     }
   }
@@ -4571,7 +4564,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">blockquote = function (quote) {
-  return &#x27;&#x3c;blockquote&#x3e;\n&#x27; + quote + &#x27;&#x3c;/blockquote&#x3e;\n&#x27;;
+  return '&lt;blockquote&gt;\n' + quote + '&lt;/blockquote&gt;\n';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -4586,7 +4579,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">br = function () {
-  return this.options.xhtml ? &#x27;&#x3c;br/&#x3e;&#x27; : &#x27;&#x3c;br&#x3e;&#x27;;
+  return this.options.xhtml ? '&lt;br/&gt;' : '&lt;br&gt;';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -4603,24 +4596,24 @@
     <li>description and source-code<pre class="apidocCodePre">code = function (code, lang, escaped) {
   if (this.options.highlight) {
     var out = this.options.highlight(code, lang);
-    if (out != null &#x26;&#x26; out !== code) {
+    if (out != null &amp;&amp; out !== code) {
       escaped = true;
       code = out;
     }
   }
 
   if (!lang) {
-    return &#x27;&#x3c;pre&#x3e;&#x3c;code&#x3e;&#x27;
+    return '&lt;pre&gt;&lt;code&gt;'
       + (escaped ? code : escape(code, true))
-      + &#x27;\n&#x3c;/code&#x3e;&#x3c;/pre&#x3e;&#x27;;
+      + '\n&lt;/code&gt;&lt;/pre&gt;';
   }
 
-  return &#x27;&#x3c;pre&#x3e;&#x3c;code class=&#x22;&#x27;
+  return '&lt;pre&gt;&lt;code class="'
     + this.options.langPrefix
     + escape(lang, true)
-    + &#x27;&#x22;&#x3e;&#x27;
+    + '"&gt;'
     + (escaped ? code : escape(code, true))
-    + &#x27;\n&#x3c;/code&#x3e;&#x3c;/pre&#x3e;\n&#x27;;
+    + '\n&lt;/code&gt;&lt;/pre&gt;\n';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -4635,7 +4628,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">codespan = function (text) {
-  return &#x27;&#x3c;code&#x3e;&#x27; + text + &#x27;&#x3c;/code&#x3e;&#x27;;
+  return '&lt;code&gt;' + text + '&lt;/code&gt;';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -4650,7 +4643,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">del = function (text) {
-  return &#x27;&#x3c;del&#x3e;&#x27; + text + &#x27;&#x3c;/del&#x3e;&#x27;;
+  return '&lt;del&gt;' + text + '&lt;/del&gt;';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -4665,7 +4658,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">em = function (text) {
-  return &#x27;&#x3c;em&#x3e;&#x27; + text + &#x27;&#x3c;/em&#x3e;&#x27;;
+  return '&lt;em&gt;' + text + '&lt;/em&gt;';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -4680,16 +4673,16 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">heading = function (text, level, raw) {
-  return &#x27;&#x3c;h&#x27;
+  return '&lt;h'
     + level
-    + &#x27; id=&#x22;&#x27;
+    + ' id="'
     + this.options.headerPrefix
-    + raw.toLowerCase().replace(/[^\w]+/g, &#x27;-&#x27;)
-    + &#x27;&#x22;&#x3e;&#x27;
+    + raw.toLowerCase().replace(/[^\w]+/g, '-')
+    + '"&gt;'
     + text
-    + &#x27;&#x3c;/h&#x27;
+    + '&lt;/h'
     + level
-    + &#x27;&#x3e;\n&#x27;;
+    + '&gt;\n';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -4704,7 +4697,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">hr = function () {
-  return this.options.xhtml ? &#x27;&#x3c;hr/&#x3e;\n&#x27; : &#x27;&#x3c;hr&#x3e;\n&#x27;;
+  return this.options.xhtml ? '&lt;hr/&gt;\n' : '&lt;hr&gt;\n';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -4734,11 +4727,11 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">image = function (href, title, text) {
-  var out = &#x27;&#x3c;img src=&#x22;&#x27; + href + &#x27;&#x22; alt=&#x22;&#x27; + text + &#x27;&#x22;&#x27;;
+  var out = '&lt;img src="' + href + '" alt="' + text + '"';
   if (title) {
-    out += &#x27; title=&#x22;&#x27; + title + &#x27;&#x22;&#x27;;
+    out += ' title="' + title + '"';
   }
-  out += this.options.xhtml ? &#x27;/&#x3e;&#x27; : &#x27;&#x3e;&#x27;;
+  out += this.options.xhtml ? '/&gt;' : '&gt;';
   return out;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -4757,20 +4750,20 @@
   if (this.options.sanitize) {
     try {
       var prot = decodeURIComponent(unescape(href))
-        .replace(/[^\w:]/g, &#x27;&#x27;)
+        .replace(/[^\w:]/g, '')
         .toLowerCase();
     } catch (e) {
-      return &#x27;&#x27;;
+      return '';
     }
-    if (prot.indexOf(&#x27;javascript:&#x27;) === 0 || prot.indexOf(&#x27;vbscript:&#x27;) === 0) {
-      return &#x27;&#x27;;
+    if (prot.indexOf('javascript:') === 0 || prot.indexOf('vbscript:') === 0) {
+      return '';
     }
   }
-  var out = &#x27;&#x3c;a href=&#x22;&#x27; + href + &#x27;&#x22;&#x27;;
+  var out = '&lt;a href="' + href + '"';
   if (title) {
-    out += &#x27; title=&#x22;&#x27; + title + &#x27;&#x22;&#x27;;
+    out += ' title="' + title + '"';
   }
-  out += &#x27;&#x3e;&#x27; + text + &#x27;&#x3c;/a&#x3e;&#x27;;
+  out += '&gt;' + text + '&lt;/a&gt;';
   return out;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -4786,8 +4779,8 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">list = function (body, ordered) {
-  var type = ordered ? &#x27;ol&#x27; : &#x27;ul&#x27;;
-  return &#x27;&#x3c;&#x27; + type + &#x27;&#x3e;\n&#x27; + body + &#x27;&#x3c;/&#x27; + type + &#x27;&#x3e;\n&#x27;;
+  var type = ordered ? 'ol' : 'ul';
+  return '&lt;' + type + '&gt;\n' + body + '&lt;/' + type + '&gt;\n';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -4802,7 +4795,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">listitem = function (text) {
-  return &#x27;&#x3c;li&#x3e;&#x27; + text + &#x27;&#x3c;/li&#x3e;\n&#x27;;
+  return '&lt;li&gt;' + text + '&lt;/li&gt;\n';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -4817,7 +4810,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">paragraph = function (text) {
-  return &#x27;&#x3c;p&#x3e;&#x27; + text + &#x27;&#x3c;/p&#x3e;\n&#x27;;
+  return '&lt;p&gt;' + text + '&lt;/p&gt;\n';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -4832,7 +4825,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">strong = function (text) {
-  return &#x27;&#x3c;strong&#x3e;&#x27; + text + &#x27;&#x3c;/strong&#x3e;&#x27;;
+  return '&lt;strong&gt;' + text + '&lt;/strong&gt;';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -4847,14 +4840,14 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">table = function (header, body) {
-  return &#x27;&#x3c;table&#x3e;\n&#x27;
-    + &#x27;&#x3c;thead&#x3e;\n&#x27;
+  return '&lt;table&gt;\n'
+    + '&lt;thead&gt;\n'
     + header
-    + &#x27;&#x3c;/thead&#x3e;\n&#x27;
-    + &#x27;&#x3c;tbody&#x3e;\n&#x27;
+    + '&lt;/thead&gt;\n'
+    + '&lt;tbody&gt;\n'
     + body
-    + &#x27;&#x3c;/tbody&#x3e;\n&#x27;
-    + &#x27;&#x3c;/table&#x3e;\n&#x27;;
+    + '&lt;/tbody&gt;\n'
+    + '&lt;/table&gt;\n';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -4869,11 +4862,11 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">tablecell = function (content, flags) {
-  var type = flags.header ? &#x27;th&#x27; : &#x27;td&#x27;;
+  var type = flags.header ? 'th' : 'td';
   var tag = flags.align
-    ? &#x27;&#x3c;&#x27; + type + &#x27; style=&#x22;text-align:&#x27; + flags.align + &#x27;&#x22;&#x3e;&#x27;
-    : &#x27;&#x3c;&#x27; + type + &#x27;&#x3e;&#x27;;
-  return tag + content + &#x27;&#x3c;/&#x27; + type + &#x27;&#x3e;\n&#x27;;
+    ? '&lt;' + type + ' style="text-align:' + flags.align + '"&gt;'
+    : '&lt;' + type + '&gt;';
+  return tag + content + '&lt;/' + type + '&gt;\n';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -4888,7 +4881,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">tablerow = function (content) {
-  return &#x27;&#x3c;tr&#x3e;\n&#x27; + content + &#x27;&#x3c;/tr&#x3e;\n&#x27;;
+  return '&lt;tr&gt;\n' + content + '&lt;/tr&gt;\n';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -4923,7 +4916,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">blockquote = function (quote) {
-  return &#x27;&#x3c;blockquote&#x3e;\n&#x27; + quote + &#x27;&#x3c;/blockquote&#x3e;\n&#x27;;
+  return '&lt;blockquote&gt;\n' + quote + '&lt;/blockquote&gt;\n';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -4943,7 +4936,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">br = function () {
-  return this.options.xhtml ? &#x27;&#x3c;br/&#x3e;&#x27; : &#x27;&#x3c;br&#x3e;&#x27;;
+  return this.options.xhtml ? '&lt;br/&gt;' : '&lt;br&gt;';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -4965,24 +4958,24 @@
     <li>description and source-code<pre class="apidocCodePre">code = function (code, lang, escaped) {
   if (this.options.highlight) {
     var out = this.options.highlight(code, lang);
-    if (out != null &#x26;&#x26; out !== code) {
+    if (out != null &amp;&amp; out !== code) {
       escaped = true;
       code = out;
     }
   }
 
   if (!lang) {
-    return &#x27;&#x3c;pre&#x3e;&#x3c;code&#x3e;&#x27;
+    return '&lt;pre&gt;&lt;code&gt;'
       + (escaped ? code : escape(code, true))
-      + &#x27;\n&#x3c;/code&#x3e;&#x3c;/pre&#x3e;&#x27;;
+      + '\n&lt;/code&gt;&lt;/pre&gt;';
   }
 
-  return &#x27;&#x3c;pre&#x3e;&#x3c;code class=&#x22;&#x27;
+  return '&lt;pre&gt;&lt;code class="'
     + this.options.langPrefix
     + escape(lang, true)
-    + &#x27;&#x22;&#x3e;&#x27;
+    + '"&gt;'
     + (escaped ? code : escape(code, true))
-    + &#x27;\n&#x3c;/code&#x3e;&#x3c;/pre&#x3e;\n&#x27;;
+    + '\n&lt;/code&gt;&lt;/pre&gt;\n';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -5002,7 +4995,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">codespan = function (text) {
-  return &#x27;&#x3c;code&#x3e;&#x27; + text + &#x27;&#x3c;/code&#x3e;&#x27;;
+  return '&lt;code&gt;' + text + '&lt;/code&gt;';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -5022,7 +5015,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">del = function (text) {
-  return &#x27;&#x3c;del&#x3e;&#x27; + text + &#x27;&#x3c;/del&#x3e;&#x27;;
+  return '&lt;del&gt;' + text + '&lt;/del&gt;';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -5042,7 +5035,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">em = function (text) {
-  return &#x27;&#x3c;em&#x3e;&#x27; + text + &#x27;&#x3c;/em&#x3e;&#x27;;
+  return '&lt;em&gt;' + text + '&lt;/em&gt;';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -5062,16 +5055,16 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">heading = function (text, level, raw) {
-  return &#x27;&#x3c;h&#x27;
+  return '&lt;h'
     + level
-    + &#x27; id=&#x22;&#x27;
+    + ' id="'
     + this.options.headerPrefix
-    + raw.toLowerCase().replace(/[^\w]+/g, &#x27;-&#x27;)
-    + &#x27;&#x22;&#x3e;&#x27;
+    + raw.toLowerCase().replace(/[^\w]+/g, '-')
+    + '"&gt;'
     + text
-    + &#x27;&#x3c;/h&#x27;
+    + '&lt;/h'
     + level
-    + &#x27;&#x3e;\n&#x27;;
+    + '&gt;\n';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -5091,7 +5084,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">hr = function () {
-  return this.options.xhtml ? &#x27;&#x3c;hr/&#x3e;\n&#x27; : &#x27;&#x3c;hr&#x3e;\n&#x27;;
+  return this.options.xhtml ? '&lt;hr/&gt;\n' : '&lt;hr&gt;\n';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -5131,11 +5124,11 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">image = function (href, title, text) {
-  var out = &#x27;&#x3c;img src=&#x22;&#x27; + href + &#x27;&#x22; alt=&#x22;&#x27; + text + &#x27;&#x22;&#x27;;
+  var out = '&lt;img src="' + href + '" alt="' + text + '"';
   if (title) {
-    out += &#x27; title=&#x22;&#x27; + title + &#x27;&#x22;&#x27;;
+    out += ' title="' + title + '"';
   }
-  out += this.options.xhtml ? &#x27;/&#x3e;&#x27; : &#x27;&#x3e;&#x27;;
+  out += this.options.xhtml ? '/&gt;' : '&gt;';
   return out;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -5159,20 +5152,20 @@
   if (this.options.sanitize) {
     try {
       var prot = decodeURIComponent(unescape(href))
-        .replace(/[^\w:]/g, &#x27;&#x27;)
+        .replace(/[^\w:]/g, '')
         .toLowerCase();
     } catch (e) {
-      return &#x27;&#x27;;
+      return '';
     }
-    if (prot.indexOf(&#x27;javascript:&#x27;) === 0 || prot.indexOf(&#x27;vbscript:&#x27;) === 0) {
-      return &#x27;&#x27;;
+    if (prot.indexOf('javascript:') === 0 || prot.indexOf('vbscript:') === 0) {
+      return '';
     }
   }
-  var out = &#x27;&#x3c;a href=&#x22;&#x27; + href + &#x27;&#x22;&#x27;;
+  var out = '&lt;a href="' + href + '"';
   if (title) {
-    out += &#x27; title=&#x22;&#x27; + title + &#x27;&#x22;&#x27;;
+    out += ' title="' + title + '"';
   }
-  out += &#x27;&#x3e;&#x27; + text + &#x27;&#x3c;/a&#x3e;&#x27;;
+  out += '&gt;' + text + '&lt;/a&gt;';
   return out;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -5193,8 +5186,8 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">list = function (body, ordered) {
-  var type = ordered ? &#x27;ol&#x27; : &#x27;ul&#x27;;
-  return &#x27;&#x3c;&#x27; + type + &#x27;&#x3e;\n&#x27; + body + &#x27;&#x3c;/&#x27; + type + &#x27;&#x3e;\n&#x27;;
+  var type = ordered ? 'ol' : 'ul';
+  return '&lt;' + type + '&gt;\n' + body + '&lt;/' + type + '&gt;\n';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -5214,7 +5207,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">listitem = function (text) {
-  return &#x27;&#x3c;li&#x3e;&#x27; + text + &#x27;&#x3c;/li&#x3e;\n&#x27;;
+  return '&lt;li&gt;' + text + '&lt;/li&gt;\n';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -5234,7 +5227,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">paragraph = function (text) {
-  return &#x27;&#x3c;p&#x3e;&#x27; + text + &#x27;&#x3c;/p&#x3e;\n&#x27;;
+  return '&lt;p&gt;' + text + '&lt;/p&gt;\n';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -5254,7 +5247,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">strong = function (text) {
-  return &#x27;&#x3c;strong&#x3e;&#x27; + text + &#x27;&#x3c;/strong&#x3e;&#x27;;
+  return '&lt;strong&gt;' + text + '&lt;/strong&gt;';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -5274,14 +5267,14 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">table = function (header, body) {
-  return &#x27;&#x3c;table&#x3e;\n&#x27;
-    + &#x27;&#x3c;thead&#x3e;\n&#x27;
+  return '&lt;table&gt;\n'
+    + '&lt;thead&gt;\n'
     + header
-    + &#x27;&#x3c;/thead&#x3e;\n&#x27;
-    + &#x27;&#x3c;tbody&#x3e;\n&#x27;
+    + '&lt;/thead&gt;\n'
+    + '&lt;tbody&gt;\n'
     + body
-    + &#x27;&#x3c;/tbody&#x3e;\n&#x27;
-    + &#x27;&#x3c;/table&#x3e;\n&#x27;;
+    + '&lt;/tbody&gt;\n'
+    + '&lt;/table&gt;\n';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -5301,11 +5294,11 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">tablecell = function (content, flags) {
-  var type = flags.header ? &#x27;th&#x27; : &#x27;td&#x27;;
+  var type = flags.header ? 'th' : 'td';
   var tag = flags.align
-    ? &#x27;&#x3c;&#x27; + type + &#x27; style=&#x22;text-align:&#x27; + flags.align + &#x27;&#x22;&#x3e;&#x27;
-    : &#x27;&#x3c;&#x27; + type + &#x27;&#x3e;&#x27;;
-  return tag + content + &#x27;&#x3c;/&#x27; + type + &#x27;&#x3e;\n&#x27;;
+    ? '&lt;' + type + ' style="text-align:' + flags.align + '"&gt;'
+    : '&lt;' + type + '&gt;';
+  return tag + content + '&lt;/' + type + '&gt;\n';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -5325,7 +5318,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">tablerow = function (content) {
-  return &#x27;&#x3c;tr&#x3e;\n&#x27; + content + &#x27;&#x3c;/tr&#x3e;\n&#x27;;
+  return '&lt;tr&gt;\n' + content + '&lt;/tr&gt;\n';
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -5453,18 +5446,18 @@
 		}
 
 		if (file.isStream()) {
-			cb(new gutil.PluginError(&#x27;gulp-markdown&#x27;, &#x27;Streaming not supported&#x27;));
+			cb(new gutil.PluginError('gulp-markdown', 'Streaming not supported'));
 			return;
 		}
 
 		marked(file.contents.<span class="apidocCodeKeywordSpan">toString</span>(), options, function (err, data) {
 			if (err) {
-				cb(new gutil.PluginError(&#x27;gulp-markdown&#x27;, err, {fileName: file.path}));
+				cb(new gutil.PluginError('gulp-markdown', err, {fileName: file.path}));
 				return;
 			}
 
 			file.contents = new Buffer(data);
-			file.path = gutil.replaceExtension(file.path, &#x27;.html&#x27;);
+			file.path = gutil.replaceExtension(file.path, '.html');
 ...</pre></li>
     </ul>
 
@@ -5477,3 +5470,4 @@
     ]
 </div>
 </div>
+</body></html>
