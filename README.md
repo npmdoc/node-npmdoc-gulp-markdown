@@ -1,4 +1,7 @@
-# api documentation for  [gulp-markdown (v1.2.0)](https://github.com/sindresorhus/gulp-markdown)  [![npm package](https://img.shields.io/npm/v/npmdoc-gulp-markdown.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-gulp-markdown) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-gulp-markdown.svg)](https://travis-ci.org/npmdoc/node-npmdoc-gulp-markdown)
+# npmdoc-gulp-markdown
+
+#### basic api documentation for  [gulp-markdown (v1.2.0)](https://github.com/sindresorhus/gulp-markdown)  [![npm package](https://img.shields.io/npm/v/npmdoc-gulp-markdown.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-gulp-markdown) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-gulp-markdown.svg)](https://travis-ci.org/npmdoc/node-npmdoc-gulp-markdown)
+
 #### Markdown to HTML
 
 [![NPM](https://nodei.co/npm/gulp-markdown.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/gulp-markdown)
@@ -72,7 +75,8 @@
     "scripts": {
         "test": "mocha"
     },
-    "version": "1.2.0"
+    "version": "1.2.0",
+    "bin": {}
 }
 ```
 
